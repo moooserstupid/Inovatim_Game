@@ -9,12 +9,17 @@ public class Full : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(NotFull());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator NotFull()
     {
-        
+        while (true)
+        {
+            yield return new WaitForSeconds(30);
+            fullOrNot = false;
+        }
+
     }
+
 }

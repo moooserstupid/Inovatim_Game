@@ -6,15 +6,15 @@ public class ColorChanger : MonoBehaviour
 {
     public int life = 30;
     public bool alive = true;
-    public Color highLife;
-    public Color highMid;
-    public Color highLow;
+    public Material highLife;
+    public Material midLife;
+    public Material lowLife;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        this.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+        this.GetComponent<Renderer>().material = highLife;
         StartCoroutine(Live());
     }
 
@@ -29,16 +29,20 @@ public class ColorChanger : MonoBehaviour
         {
             if (life <= (life) * (1 / 3))
             {
-                this.GetComponent<Renderer>().material.SetColor("_Color", Color.gray);
+                this.GetComponent<Renderer>().material = midLife;
             }
             else if(life <= life * (2 / 3))
             {
-                this.GetComponent<Renderer>().material.SetColor("_Color", Color.black);
+                this.GetComponent<Renderer>().material = lowLife;
             }
 
             if(life == 0)
             {
                 alive = false;
+
+                GameObject go = GameObject.Find("Currency");
+                go.GetComponent<Currnecy>().LoseMoney("not_alive");
+
                 Object.Destroy(this.gameObject);
             }
             yield return new WaitForSeconds(1);

@@ -8,8 +8,6 @@ public class Spawner : MonoBehaviour
 
     public GameObject Box;
     private GameObject randomSpawnSpot;
-    private int timer = 0;
-    //public GameObject boxpositions;
     public GameObject[] boxPositonList;
     public int gerisayimCount = 0;
     private bool go = true;
@@ -18,13 +16,7 @@ public class Spawner : MonoBehaviour
     
         void Start()
     {
-        //boxPositonList = boxpositions.GetComponents(typeof(GameObject));
         StartCoroutine(BoxGen());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     IEnumerator BoxGen()
@@ -36,11 +28,11 @@ public class Spawner : MonoBehaviour
             {
                 V = new Vector3(randomSpawnSpot.transform.position.x, randomSpawnSpot.transform.position.y, randomSpawnSpot.transform.position.z);
                 Instantiate(Box, V,Q) ;
-                new WaitForSeconds(30 - gerisayimCount);
                 Debug.Log(2);
-                go = false;
                 randomSpawnSpot.GetComponent<Full>().fullOrNot = true;
+                yield return new WaitForSeconds(5 - gerisayimCount);
             }
+            go = false;
 
             for (int i = 0; i < boxPositonList.Length; i++)
             {
@@ -53,10 +45,15 @@ public class Spawner : MonoBehaviour
                 }    
             }
             yield return new WaitForSeconds(1);
+            if (!go)
+            {
+                Debug.Log("deneme");
+                yield return new WaitForSeconds(20);
+                go = true;
+            }
 
         }
         Debug.Log(go);
-        
     }
 }
 
