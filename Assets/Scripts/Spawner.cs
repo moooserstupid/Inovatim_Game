@@ -9,6 +9,7 @@ public class Spawner : MonoBehaviour
     public GameObject Box;
     private GameObject randomSpawnSpot;
     private int timer = 0;
+    //public GameObject boxpositions;
     public GameObject[] boxPositonList;
     public int gerisayimCount = 0;
     private bool go = true;
@@ -17,7 +18,7 @@ public class Spawner : MonoBehaviour
     
         void Start()
     {
-        Debug.Log(0);
+        //boxPositonList = boxpositions.GetComponents(typeof(GameObject));
         StartCoroutine(BoxGen());
     }
 
@@ -28,7 +29,6 @@ public class Spawner : MonoBehaviour
 
     IEnumerator BoxGen()
     {
-        Debug.Log(1);
         while (go)
         {
             randomSpawnSpot = boxPositonList[Random.Range(0, boxPositonList.Length)];
@@ -52,9 +52,11 @@ public class Spawner : MonoBehaviour
                     break;
                 }    
             }
+            yield return new WaitForSeconds(1);
 
         }
-        yield return new WaitForSeconds(1);
+        Debug.Log(go);
+        
     }
 }
 
