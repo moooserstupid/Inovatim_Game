@@ -36,7 +36,7 @@ public class Spawner : MonoBehaviour
             {
                 V = new Vector3(randomSpawnSpot.transform.position.x, randomSpawnSpot.transform.position.y, randomSpawnSpot.transform.position.z);
                 Instantiate(Box, V,Q) ;
-                new WaitForSeconds(10 - gerisayimCount);
+                new WaitForSeconds(30 - gerisayimCount);
                 Debug.Log(2);
                 go = false;
                 randomSpawnSpot.GetComponent<Full>().fullOrNot = true;
