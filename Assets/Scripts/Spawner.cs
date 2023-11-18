@@ -27,8 +27,7 @@ public class Spawner : MonoBehaviour
             if (randomSpawnSpot.GetComponent<Full>().fullOrNot == false)
             {
                 V = new Vector3(randomSpawnSpot.transform.position.x, randomSpawnSpot.transform.position.y, randomSpawnSpot.transform.position.z);
-                Instantiate(Box, V,Q) ;
-                Debug.Log(2);
+                Instantiate(Box,V,Q);
                 randomSpawnSpot.GetComponent<Full>().fullOrNot = true;
                 yield return new WaitForSeconds(5 - gerisayimCount);
             }
@@ -40,20 +39,17 @@ public class Spawner : MonoBehaviour
                 if (boxPositonList[i].GetComponent<Full>().fullOrNot == false)
                 {
                     go = true;
-                    Debug.Log(123);
                     break;
                 }    
             }
             yield return new WaitForSeconds(1);
             if (!go)
             {
-                Debug.Log("deneme");
                 yield return new WaitForSeconds(20);
                 go = true;
             }
 
         }
-        Debug.Log(go);
     }
 }
 

@@ -37,10 +37,10 @@ public class Currnecy : MonoBehaviour
         {
             money -= speedUp;
         }
-        //else
-        //{
-        //    money -= shelf;
-        //}
+        else if (durum == "wrongaddress")
+        {
+            money -= not_alive;
+        }
         Debug.Log(money);
     }
 
