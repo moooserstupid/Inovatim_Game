@@ -33,7 +33,7 @@ public class Currnecy : MonoBehaviour
         {
             money -= not_alive;
         }
-        else if (durum == "hýzlan")
+        else if (durum == "speed")
         {
             money -= speedUp;
         }
