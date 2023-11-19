@@ -34,9 +34,14 @@ namespace Player
         private Coroutine powerUpCoroutine;
         private Vector3 dummyPackageRestPosition;
 
+        private string m_currentPackageAddressRef;
         private float m_currentPowerUpTimer;
         private bool m_hasPackage = false;
         private bool m_fireInputPressed = false;
+
+
+        private static readonly string[] addresList = { "A", "B", "C", "D" };
+
         private void Awake()
         {
             m_input = new CharacterInput();
@@ -92,8 +97,10 @@ namespace Player
             GameObject projectile = Instantiate(objectToThrow, attackPoint.position, throwRotation);
             Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
             Vector3 forceDirection = attackPoint.forward;
-
-
+            if (m_currentPackageAddressRef != null)
+            {
+                projectile.GetComponent<TriggerAddres>().SetAddress(m_currentPackageAddressRef);
+            }
 
             RaycastHit hit;
 
@@ -135,7 +142,8 @@ namespace Player
             m_hasPackage = true;
             dummyPackage.SetActive(true);
             Vector3 centerLocalPositionRelativeToPackage = dummyPackage.transform.InverseTransformPoint(colliderCenter);
-            Debug.Log(centerLocalPositionRelativeToPackage);
+            m_currentPackageAddressRef = addresList[UnityEngine.Random.Range(0, addresList.Length)];
+
             StartCoroutine(StartLoadingPackage(0.2f, centerLocalPositionRelativeToPackage));
         }
 
@@ -155,6 +163,14 @@ namespace Player
 
                 other.gameObject.GetComponent<SpawnLocation>().TakePackage();
                 LoadPackage(other.bounds.center);
+            }
+            if (other.CompareTag("Package") && !m_hasPackage)
+            {
+                other.GetComponent<TriggerAddres>().ReuseAfterFall();
+                m_currentPackageAddressRef = other.GetComponent<TriggerAddres>().GetAddress();
+                m_hasPackage = true;
+                dummyPackage.SetActive(true);
+
             }
         }
         IEnumerator StartLoadingPackage(float duration, Vector3 loadOrigin)
@@ -203,6 +219,7 @@ namespace Player
                 yield return null;
             }
 
+            yield return new WaitUntil(() => !m_fireInputPressed);
             throwerSurface.transform.localRotation = start;
 
             yield return null;
