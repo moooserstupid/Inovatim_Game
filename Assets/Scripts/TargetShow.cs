@@ -1,30 +1,46 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TargetShow : MonoBehaviour
 {
-    public Transform[] target;
+    //public Transform[] target;
+    private Transform target;
     public float rotationSpeed;
-    int targetNo;
+    private bool isActive;
     void Start()
     {
-        targetNo = 0;
-        //gameObject.SetActive(false);
+        //targetNo = 0;
+        gameObject.SetActive(false);
+        isActive = false;
     }
+
+    public void SetTarget(Transform target)
+    {
+        gameObject.SetActive(true);
+        this.target = target;
+        isActive = true;
+    }
+    public void DeactivateTarget()
+    {
+        gameObject.SetActive(false);
+        isActive = false;
+    } 
     void Update()
     {
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target[targetNo].position - transform.position),
+        if (!isActive) return;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target.position - transform.position),
             rotationSpeed * Time.deltaTime);
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            targetNo++;
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    targetNo++;
             
-            if (targetNo == target.Length) 
-            {
-                targetNo = 0;
-            }
-        }
+        //    if (targetNo == target.Length) 
+        //    {
+        //        targetNo = 0;
+        //    }
+        //}
             //transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(target.position-transform.position),
             //rotationSpeed*Time.deltaTime);
     }

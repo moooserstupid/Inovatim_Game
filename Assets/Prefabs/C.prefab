@@ -79,10 +79,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 22d3236ea5db204429cec0f0a5f565ed,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4091310642732328716}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 22d3236ea5db204429cec0f0a5f565ed,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 849864394962155803}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 22d3236ea5db204429cec0f0a5f565ed,
         type: 3}
@@ -112,20 +108,6 @@ MonoBehaviour:
   highLife: {fileID: 2100000, guid: a7d7b9531beec3f468278fb46344d2ba, type: 2}
   midLife: {fileID: 2100000, guid: a123cc7193e888c4a90f099ef672a141, type: 2}
   lowLife: {fileID: 2100000, guid: b15a7259f196b4340b8b3f7301a54165, type: 2}
---- !u!114 &4091310642732328716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4250345832133727766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2fc2e44173943c4e9f20141471835f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Addres: 
-  damaged: 0
 --- !u!65 &849864394962155803
 BoxCollider:
   m_ObjectHideFlags: 0
