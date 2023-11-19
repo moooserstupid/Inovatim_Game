@@ -5779,8 +5779,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1229066734}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10024251, y: 0.63498497, z: -0.083597325, w: 0.7614177}
-  m_LocalPosition: {x: -5.794451, y: 5.0450077, z: 0.72248757}
+  m_LocalRotation: {x: 0.13048913, y: 0.023616347, z: -0.0031091503, w: 0.9911636}
+  m_LocalPosition: {x: 1.6341565, y: 5.045008, z: -5.170474}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10370,7 +10370,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startMovementSpeed: 10
   maxMovementSpeed: 20
-  accelerationDuration: 0.5
+  accelerationRate: 0.5
+  decelerationRate: 0.5
   groundOffset: 0
   groundLayerMask:
     serializedVersion: 2
@@ -10820,6 +10821,7 @@ MonoBehaviour:
   dummyPackage: {fileID: 1687243054633328326}
   throwerSurface: {fileID: 4400616748848374908}
   maxThrowRotation: {fileID: 622436775}
+  targetArrow: {fileID: 0}
 --- !u!1 &7885492388943238397
 GameObject:
   m_ObjectHideFlags: 0

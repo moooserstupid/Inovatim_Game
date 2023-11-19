@@ -34,6 +34,8 @@ namespace Player
         private bool m_hasPackage = false;
         private bool m_fireInputPressed = false;
         private BoxTime m_boxTimerReference;
+        private int m_packageStateReference;
+
         private static readonly string[] addresList = { "A", "B", "C", "D" };
         private void Awake()
         {
@@ -84,13 +86,14 @@ namespace Player
             Vector3 forceDirection = attackPoint.forward;
             if (m_currentPackageAddressRef != null)
             {
-                projectile.GetComponent<TriggerAddres>().SetAddress(m_currentPackageAddressRef);
+                projectile.GetComponent<Package>().SetAddress(m_currentPackageAddressRef);
                 targetArrow.DeactivateTarget();
             }
-            if (m_boxTimerReference != null)
-            {
-                projectile.GetComponentInChildren<TimerScript>().SetTime(m_boxTimerReference.second, m_boxTimerReference.minute);
-            }
+            //if (m_boxTimerReference != null)
+            //{
+            //    projectile.GetComponentInChildren<TimerScript>().SetTime(m_boxTimerReference.second, m_boxTimerReference.minute);
+            //}
+            projectile.GetComponent<Package>().SetPackageState(m_packageStateReference);
             RaycastHit hit;
             if (Physics.Raycast(camFollowPos.position, camFollowPos.forward, out hit, 500f))
             {
@@ -124,11 +127,12 @@ namespace Player
         {
             m_hasPackage = true;
             dummyPackage.SetActive(true);
-            dummyPackage.GetComponentInChildren<TimerScript>().SetTime(m_boxTimerReference.second, m_boxTimerReference.minute);
+            //dummyPackage.GetComponentInChildren<TimerScript>().SetTime(m_boxTimerReference.second, m_boxTimerReference.minute);
             Vector3 centerLocalPositionRelativeToPackage = dummyPackage.transform.InverseTransformPoint(colliderCenter);
             Debug.Log(centerLocalPositionRelativeToPackage);
             m_currentPackageAddressRef = addresList[UnityEngine.Random.Range(0, addresList.Length)];
             targetArrow.SetTarget(GameObject.Find(m_currentPackageAddressRef).transform);
+            m_packageStateReference = 0;
             StartCoroutine(StartLoadingPackage(0.2f, centerLocalPositionRelativeToPackage));
         }
         private void OnEnable()
@@ -151,17 +155,21 @@ namespace Player
                 m_boxTimerReference.second = 30;
                 m_boxTimerReference.minute = 0;
                 LoadPackage(other.bounds.center);
+                return;
             }
             if (other.CompareTag("Package") && !m_hasPackage)
             {
-                other.GetComponent<TriggerAddres>().ReuseAfterFall();
-                m_currentPackageAddressRef = other.GetComponent<TriggerAddres>().GetAddress();
-                m_boxTimerReference = other.GetComponentInChildren<TimerScript>().GetTime();
-                dummyPackage.GetComponentInChildren<TimerScript>().SetTime(m_boxTimerReference.second, m_boxTimerReference.minute);
+                other.GetComponent<Package>().ReuseAfterFall();
+                m_currentPackageAddressRef = other.GetComponent<Package>().GetAddress();
+                m_packageStateReference = other.GetComponent<Package>().GetPackageState();
+               // m_boxTimerReference = other.GetComponentInChildren<TimerScript>().GetTime();
+                //dummyPackage.GetComponentInChildren<TimerScript>().SetTime(m_boxTimerReference.second, m_boxTimerReference.minute);
                 targetArrow.SetTarget(GameObject.Find(m_currentPackageAddressRef).transform);
                 m_hasPackage = true;
                 dummyPackage.SetActive(true);
+                return;
             }
+            
         }
         IEnumerator StartLoadingPackage(float duration, Vector3 loadOrigin)
         {
@@ -192,6 +200,13 @@ namespace Player
             //dummyPackage.transform.rotation = start;
 
         }
+        //private void OnCollisionEnter(Collision collision)
+        //{
+        //    if (collision.gameObject.CompareTag("FakePackage"))
+        //    {
+        //        collision.gameObject.GetComponent<FakePackage>().ReuseAfterFall();
+        //    }
+        //}
         IEnumerator RotateThrower()
         {
             float currentRotationTimer = 0f;

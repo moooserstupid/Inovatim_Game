@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BoxDamageScript : MonoBehaviour
 {
-    public GameObject[] Boxes ;
+    public GameObject[] Boxes;
     int boxNo;
     void Start()
     {

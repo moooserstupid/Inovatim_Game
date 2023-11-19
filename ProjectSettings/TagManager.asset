@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - Package
   - TestTag
+  - FakePackage
   layers:
   - Default
   - TransparentFX

@@ -17,6 +17,8 @@ public class Currnecy : MonoBehaviour
     public int not_alive = 5;
     public int speedUp = 50;
 
+    public int goal = 50;
+
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -33,8 +35,23 @@ public class Currnecy : MonoBehaviour
         {
             money += succes;
         }
+
+        if (money >= goal)
+        {
+            GameWon();
+        }
         Debug.Log(money);
         _audioSource.PlayOneShot(moneyEarn, 0.7F);
+    }
+
+    public void GameWon()
+    {
+        Debug.Log("Won");
+    }
+
+    public void GameLost()
+    {
+        Debug.Log("Lost");
     }
 
     public void LoseMoney(string durum)
@@ -50,6 +67,10 @@ public class Currnecy : MonoBehaviour
         else if (durum == "wrongaddress")
         {
             money -= not_alive;
+        }
+        if (money <= 0)
+        {
+            GameLost();
         }
         Debug.Log(money);
         _audioSource.PlayOneShot(fail, 0.5F) ;

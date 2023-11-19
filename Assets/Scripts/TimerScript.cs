@@ -56,7 +56,12 @@ public class TimerScript : MonoBehaviour
             if (minutes == 0 & seconds == 0)
             {
                 playcountdown = false;
-                Destroy(gameObject); 
+                if (gameObject.activeInHierarchy)
+                {
+                    gameObject.SetActive(false);
+                    Destroy(gameObject, 2f);
+                }
+                
             }
         }
     }
