@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Full : MonoBehaviour
+public class SpawnLocation : MonoBehaviour
 {
     public bool fullOrNot = false;
 
@@ -20,6 +20,11 @@ public class Full : MonoBehaviour
             fullOrNot = false;
         }
 
+    }
+
+    public void TakePackage()
+    {
+        fullOrNot = false;
     }
 
 }
