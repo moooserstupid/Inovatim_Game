@@ -24,6 +24,7 @@ namespace Player
         [SerializeField] private GameObject dummyPackage;
         [SerializeField] private GameObject throwerSurface;
         [SerializeField] private Transform maxThrowRotation;
+        [SerializeField] private TargetShow targetArrow;
         private CharacterInput m_input;
         private Vector2 m_currentAimInput;
         private Coroutine powerUpCoroutine;
@@ -32,6 +33,7 @@ namespace Player
         private float m_currentPowerUpTimer;
         private bool m_hasPackage = false;
         private bool m_fireInputPressed = false;
+        private BoxTime m_boxTimerReference;
         private static readonly string[] addresList = { "A", "B", "C", "D" };
         private void Awake()
         {
@@ -83,6 +85,11 @@ namespace Player
             if (m_currentPackageAddressRef != null)
             {
                 projectile.GetComponent<TriggerAddres>().SetAddress(m_currentPackageAddressRef);
+                targetArrow.DeactivateTarget();
+            }
+            if (m_boxTimerReference != null)
+            {
+                projectile.GetComponentInChildren<TimerScript>().SetTime(m_boxTimerReference.second, m_boxTimerReference.minute);
             }
             RaycastHit hit;
             if (Physics.Raycast(camFollowPos.position, camFollowPos.forward, out hit, 500f))
@@ -117,9 +124,11 @@ namespace Player
         {
             m_hasPackage = true;
             dummyPackage.SetActive(true);
+            dummyPackage.GetComponentInChildren<TimerScript>().SetTime(m_boxTimerReference.second, m_boxTimerReference.minute);
             Vector3 centerLocalPositionRelativeToPackage = dummyPackage.transform.InverseTransformPoint(colliderCenter);
             Debug.Log(centerLocalPositionRelativeToPackage);
             m_currentPackageAddressRef = addresList[UnityEngine.Random.Range(0, addresList.Length)];
+            targetArrow.SetTarget(GameObject.Find(m_currentPackageAddressRef).transform);
             StartCoroutine(StartLoadingPackage(0.2f, centerLocalPositionRelativeToPackage));
         }
         private void OnEnable()
@@ -135,12 +144,21 @@ namespace Player
             if (other.CompareTag("Spawner") && !m_hasPackage)
             {
                 other.gameObject.GetComponent<SpawnLocation>().TakePackage();
+                if (m_boxTimerReference == null)
+                {
+                    m_boxTimerReference = new BoxTime();
+                }
+                m_boxTimerReference.second = 30;
+                m_boxTimerReference.minute = 0;
                 LoadPackage(other.bounds.center);
             }
             if (other.CompareTag("Package") && !m_hasPackage)
             {
                 other.GetComponent<TriggerAddres>().ReuseAfterFall();
                 m_currentPackageAddressRef = other.GetComponent<TriggerAddres>().GetAddress();
+                m_boxTimerReference = other.GetComponentInChildren<TimerScript>().GetTime();
+                dummyPackage.GetComponentInChildren<TimerScript>().SetTime(m_boxTimerReference.second, m_boxTimerReference.minute);
+                targetArrow.SetTarget(GameObject.Find(m_currentPackageAddressRef).transform);
                 m_hasPackage = true;
                 dummyPackage.SetActive(true);
             }

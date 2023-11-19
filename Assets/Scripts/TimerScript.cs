@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+public class BoxTime
+{
+    public int minute;
+    public int second;
+}
 public class TimerScript : MonoBehaviour
 {
     public bool playcountdown;
@@ -18,6 +23,18 @@ public class TimerScript : MonoBehaviour
     void Update()
     {
         
+    }
+    public void SetTime(int seconds, int minutes)
+    {
+        this.seconds = seconds;
+        this.minutes = minutes;
+    }
+    public BoxTime GetTime()
+    {
+        BoxTime boxTime = new BoxTime();
+        boxTime.minute = minutes;
+        boxTime.second = seconds;
+        return boxTime;
     }
 
     IEnumerator countdown()
