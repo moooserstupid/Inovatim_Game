@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Currnecy : MonoBehaviour
 {
+
+    [SerializeField] private AudioClip moneyEarn;
+    [SerializeField] private AudioClip fail;
+    [SerializeField] private AudioSource _audioSource;
+
     public int money = 0;
     
     public int succes = 10;
@@ -12,6 +17,10 @@ public class Currnecy : MonoBehaviour
     public int not_alive = 5;
     public int speedUp = 50;
 
+    private void Start()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
 
     public void EarnMoney(bool damaged)
 
@@ -25,6 +34,7 @@ public class Currnecy : MonoBehaviour
             money += succes;
         }
         Debug.Log(money);
+        _audioSource.PlayOneShot(moneyEarn, 0.7F);
     }
 
     public void LoseMoney(string durum)
@@ -42,8 +52,8 @@ public class Currnecy : MonoBehaviour
             money -= not_alive;
         }
         Debug.Log(money);
+        _audioSource.PlayOneShot(fail, 0.5F) ;
     }
-
 }
 
 
