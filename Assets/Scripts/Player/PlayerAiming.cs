@@ -12,6 +12,8 @@ namespace Player
 
     public class PlayerAiming : MonoBehaviour
     {
+        private AudioSource throwSound;
+
         [Header("Throwing Parameters")]
         [SerializeField] private float maxPowerUpDuration = 0.5f;
         [SerializeField] private float initialThrowForce = 5f;
@@ -53,6 +55,8 @@ namespace Player
             m_hasPackage = false;
             dummyPackageRestPosition = dummyPackage.transform.position;
             dummyPackage.SetActive(false);
+
+            throwSound = GetComponent<AudioSource>();
         }
 
         private void OnFireInput(InputAction.CallbackContext context)
@@ -86,6 +90,8 @@ namespace Player
 
         private void Throw(float forceMagnitude)
         {
+            throwSound.Play();
+
             Quaternion throwRotation = Quaternion.FromToRotation(Vector3.up, transform.forward);
             objectToThrow.transform.rotation = throwRotation * attackPoint.transform.rotation;
 
