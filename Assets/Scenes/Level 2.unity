@@ -2572,6 +2572,7 @@ MonoBehaviour:
   damagedSucces: 5
   not_alive: 5
   speedUp: 50
+  goal: 50
 --- !u!4 &1148405344
 Transform:
   m_ObjectHideFlags: 0
@@ -4478,6 +4479,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 392810705}
+    - target: {fileID: 7332914326794273671, guid: 75588e1dc610ac649bcb8e4ce90584b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
