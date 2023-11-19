@@ -12,14 +12,15 @@ public class BoxDamageScript : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("TestTag"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             Boxes[boxNo].gameObject.SetActive(false);
             boxNo++;
             Boxes[boxNo].gameObject.SetActive(true);
             if (boxNo == 2)
-            {                
-                Destroy(this.gameObject);
+            {
+                gameObject.SetActive(false);
+                Destroy(this.gameObject, 2f);
             }
         }
     }    
