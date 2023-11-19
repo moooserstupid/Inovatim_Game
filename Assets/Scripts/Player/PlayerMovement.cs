@@ -97,7 +97,7 @@ namespace Player
                 m_moveDirection = Vector3.Lerp(m_moveDirection, Vector3.zero, decelerationRate);
 
             }
-            Debug.Log(m_moveDirection);
+            //Debug.Log(m_moveDirection);
             m_characterController.Move(m_moveDirection * m_currentSpeed * Time.deltaTime);
         }
 

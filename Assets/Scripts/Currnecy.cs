@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 
 public class Currnecy : MonoBehaviour
 {
-
+    public static Currnecy Instance { get; private set; } 
     [SerializeField] private AudioClip moneyEarn;
     [SerializeField] private AudioClip fail;
     [SerializeField] private AudioSource _audioSource;
@@ -19,21 +20,34 @@ public class Currnecy : MonoBehaviour
 
     public int goal = 50;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        } else
+        {
+            Destroy(Instance);
+        }
+    }
+
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
     }
 
-    public void EarnMoney(bool damaged)
+    public void EarnMoney(bool damaged, Vector3 worldPosition)
 
     {
         if (damaged == true)
         {
             money += damagedSucces;
+            FloatingTextManager.Instance.ShowText("+$" + damagedSucces.ToString(), worldPosition, Color.green);
         }
         else
         {
             money += succes;
+            FloatingTextManager.Instance.ShowText("+$" + succes.ToString(), worldPosition, Color.green);
         }
 
         if (money >= goal)
@@ -54,19 +68,20 @@ public class Currnecy : MonoBehaviour
         Debug.Log("Lost");
     }
 
-    public void LoseMoney(string durum)
+    public void LoseMoney(string durum, Vector3 worldPosition)
     {
-        if (durum == "not_alive")
+        //if (durum == "not_alive")
+        //{
+        //    money -= not_alive;
+        //}
+        //else if (durum == "speed")
+        //{
+        //    money -= speedUp;
+        //}
+        if (durum == "wrongaddress")
         {
             money -= not_alive;
-        }
-        else if (durum == "speed")
-        {
-            money -= speedUp;
-        }
-        else if (durum == "wrongaddress")
-        {
-            money -= not_alive;
+            FloatingTextManager.Instance.ShowText("-$" + not_alive.ToString(), worldPosition, Color.red);
         }
         if (money <= 0)
         {
