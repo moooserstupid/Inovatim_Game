@@ -24,11 +24,11 @@ public class Spawner : MonoBehaviour
         while (go)
         {
             randomSpawnSpot = boxPositonList[Random.Range(0, boxPositonList.Length)];
-            if (randomSpawnSpot.GetComponent<Full>().fullOrNot == false)
+            if (randomSpawnSpot.GetComponent<SpawnLocation>().fullOrNot == false)
             {
                 V = new Vector3(randomSpawnSpot.transform.position.x, randomSpawnSpot.transform.position.y, randomSpawnSpot.transform.position.z);
                 Instantiate(Box,V,Q);
-                randomSpawnSpot.GetComponent<Full>().fullOrNot = true;
+                randomSpawnSpot.GetComponent<SpawnLocation>().fullOrNot = true;
                 yield return new WaitForSeconds(5 - gerisayimCount);
             }
             go = false;
@@ -36,7 +36,7 @@ public class Spawner : MonoBehaviour
             for (int i = 0; i < boxPositonList.Length; i++)
             {
 
-                if (boxPositonList[i].GetComponent<Full>().fullOrNot == false)
+                if (boxPositonList[i].GetComponent<SpawnLocation>().fullOrNot == false)
                 {
                     go = true;
                     break;

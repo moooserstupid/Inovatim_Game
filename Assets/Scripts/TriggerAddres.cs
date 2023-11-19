@@ -37,6 +37,7 @@ public class TriggerAddres : MonoBehaviour
 
             Object.Destroy(this.gameObject);
         }
+
         else if (other.tag == "Address")
         {
             GameObject go = GameObject.Find("Currency");
