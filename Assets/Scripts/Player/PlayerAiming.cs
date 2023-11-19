@@ -12,8 +12,6 @@ namespace Player
 
     public class PlayerAiming : MonoBehaviour
     {
-        private AudioSource throwSound;
-
         [Header("Throwing Parameters")]
         [SerializeField] private float maxPowerUpDuration = 0.5f;
         [SerializeField] private float initialThrowForce = 5f;
@@ -36,9 +34,14 @@ namespace Player
         private Coroutine powerUpCoroutine;
         private Vector3 dummyPackageRestPosition;
 
+        private string m_currentPackageAddressRef;
         private float m_currentPowerUpTimer;
         private bool m_hasPackage = false;
         private bool m_fireInputPressed = false;
+
+
+        private static readonly string[] addresList = { "A", "B", "C", "D" };
+
         private void Awake()
         {
             m_input = new CharacterInput();
@@ -55,8 +58,6 @@ namespace Player
             m_hasPackage = false;
             dummyPackageRestPosition = dummyPackage.transform.position;
             dummyPackage.SetActive(false);
-
-            throwSound = GetComponent<AudioSource>();
         }
 
         private void OnFireInput(InputAction.CallbackContext context)
@@ -90,16 +91,16 @@ namespace Player
 
         private void Throw(float forceMagnitude)
         {
-            throwSound.Play();
-
             Quaternion throwRotation = Quaternion.FromToRotation(Vector3.up, transform.forward);
             objectToThrow.transform.rotation = throwRotation * attackPoint.transform.rotation;
 
             GameObject projectile = Instantiate(objectToThrow, attackPoint.position, throwRotation);
             Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
             Vector3 forceDirection = attackPoint.forward;
-
-
+            if (m_currentPackageAddressRef != null)
+            {
+                projectile.GetComponent<TriggerAddres>().SetAddress(m_currentPackageAddressRef);
+            }
 
             RaycastHit hit;
 
@@ -136,19 +137,13 @@ namespace Player
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, xAxis.Value, transform.eulerAngles.z);
         }
 
-        private void LoadPackage(Vector3 colliderCenter, GameObject box)
+        private void LoadPackage(Vector3 colliderCenter)
         {
             m_hasPackage = true;
-            //dummyPackage = box.gameObject;
-            //Object.Destroy(box.gameObject);
             dummyPackage.SetActive(true);
-
-            dummyPackage = box.transform.GetChild(box.transform.childCount).gameObject;
-            box.transform.GetChild(box.transform.childCount).gameObject.SetActive(false);
-            //Object.Destroy(box.transform.GetChild(0).gameObject);
-
             Vector3 centerLocalPositionRelativeToPackage = dummyPackage.transform.InverseTransformPoint(colliderCenter);
-            Debug.Log(centerLocalPositionRelativeToPackage);
+            m_currentPackageAddressRef = addresList[UnityEngine.Random.Range(0, addresList.Length)];
+
             StartCoroutine(StartLoadingPackage(0.2f, centerLocalPositionRelativeToPackage));
         }
 
@@ -163,17 +158,20 @@ namespace Player
         }
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Spawner") && !m_hasPackage && other.GetComponent<SpawnLocation>().fullOrNot)
+            if (other.CompareTag("Spawner") && !m_hasPackage)
             {
+
                 other.gameObject.GetComponent<SpawnLocation>().TakePackage();
-                LoadPackage(other.bounds.center, other.gameObject);
-                other.GetComponent<SpawnLocation>().fullOrNot = false;
+                LoadPackage(other.bounds.center);
             }
-            //if ((other.name == "A(Clone)" | other.name == "B(Clone)" | other.name == "C(Clone)") && !m_hasPackage)
-            //{
-            //    LoadPackage(other.bounds.center, other.gameObject);
-            //    other.GetComponent<SpawnLocation>().fullOrNot = false;
-            //}
+            if (other.CompareTag("Package") && !m_hasPackage)
+            {
+                other.GetComponent<TriggerAddres>().ReuseAfterFall();
+                m_currentPackageAddressRef = other.GetComponent<TriggerAddres>().GetAddress();
+                m_hasPackage = true;
+                dummyPackage.SetActive(true);
+
+            }
         }
         IEnumerator StartLoadingPackage(float duration, Vector3 loadOrigin)
         {
@@ -221,6 +219,7 @@ namespace Player
                 yield return null;
             }
 
+            yield return new WaitUntil(() => !m_fireInputPressed);
             throwerSurface.transform.localRotation = start;
 
             yield return null;

@@ -11,8 +11,8 @@ namespace Player
         [Header("Movement Parameters")]
         [SerializeField] private float startMovementSpeed = 3.0f;
         [SerializeField] private float maxMovementSpeed = 5f;
-        [SerializeField] private float accelerationDuration = 0.5f;
-
+        [SerializeField] private float accelerationRate = 0.5f;
+        [SerializeField] private float decelerationRate = 0.5f;
         [SerializeField] private float groundOffset;
         [SerializeField] private LayerMask groundLayerMask;
         [SerializeField] private float gravity = -9.81f;
@@ -76,16 +76,28 @@ namespace Player
         {
             if (m_isMovementPressed)
             {
-                m_accelerationTime += Time.deltaTime;
+                //m_accelerationTime += Time.deltaTime;
                 if (m_currentSpeed < maxMovementSpeed)
                 {
-                    m_currentSpeed = Mathf.Lerp(m_currentSpeed, maxMovementSpeed, m_accelerationTime / accelerationDuration);
+                    m_currentSpeed = Mathf.Lerp(m_currentSpeed, maxMovementSpeed, accelerationRate);
                 }
-            } else
-            {
-                m_accelerationTime = 0;
+                m_moveDirection = transform.forward * m_currentMovement.z + transform.right * m_currentMovement.x;
             }
-            m_moveDirection = transform.forward * m_currentMovement.z + transform.right * m_currentMovement.x;
+            else
+            {
+                //m_accelerationTime = 0;
+                if (m_currentSpeed > 0.01f)
+                {
+                    m_currentSpeed = Mathf.Lerp(m_currentSpeed, 0, decelerationRate);
+                }
+                else
+                {
+                    m_currentSpeed = 0;
+                }
+                m_moveDirection = Vector3.Lerp(m_moveDirection, Vector3.zero, decelerationRate);
+
+            }
+            Debug.Log(m_moveDirection);
             m_characterController.Move(m_moveDirection * m_currentSpeed * Time.deltaTime);
         }
 

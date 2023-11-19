@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Address
   - Spawner
+  - Ground
+  - Package
+  - TestTag
   layers:
   - Default
   - TransparentFX
