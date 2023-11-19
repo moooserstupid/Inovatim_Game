@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestControl : MonoBehaviour
 {
-    float hiz = 20f;
+    float hiz = 10f;
     
 
     void Update()

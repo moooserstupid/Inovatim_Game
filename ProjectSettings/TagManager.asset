@@ -8,6 +8,7 @@ TagManager:
   - Spawner
   - Ground
   - Package
+  - TestTag
   layers:
   - Default
   - TransparentFX
