@@ -6,13 +6,14 @@ using UI;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class TriggerAddres : MonoBehaviour
+
+public class Package : MonoBehaviour
 {
-    //[SerializeField] private GameObject floatingTextPrefab;
+    [SerializeField] private GameObject[] packageList;
     public string Addres;
     private string[] addresList = { "A", "B", "C", "D" };
 
-    
+    private int packageStateIndex;
     private bool fallen = true;
     public bool damaged = false;
     // Start is called before the first frame update
@@ -24,6 +25,14 @@ public class TriggerAddres : MonoBehaviour
     public void SetAddress(string address)
     {
         Addres = address;
+    }
+    public void SetPackageState(int packageStateIndex)
+    {
+        this.packageStateIndex = packageStateIndex;
+    }
+    public int GetPackageState()
+    {
+        return packageStateIndex; 
     }
     public string GetAddress()
     {
@@ -61,8 +70,12 @@ public class TriggerAddres : MonoBehaviour
 
     public void ReuseAfterFall()
     {
-        gameObject.SetActive(false);
-        Destroy(gameObject, 2f);
+        if (gameObject.activeInHierarchy)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject, 2f);
+        }
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -78,6 +91,24 @@ public class TriggerAddres : MonoBehaviour
             collider.isTrigger = true;
             fallen = true;
             FloatingTextManager.Instance.ShowText("-50", transform.position, UnityEngine.Color.red);
+
+            
+            
+            if (packageStateIndex + 1 >= 3)
+            {
+                if (gameObject.activeInHierarchy)
+                {
+                    gameObject.SetActive(false);
+                    Destroy(this.gameObject, 2f);
+                }
+                
+            }
+            else
+            {
+                packageList[packageStateIndex].gameObject.SetActive(false);
+                packageStateIndex++;
+                packageList[packageStateIndex].gameObject.SetActive(true);
+            }
         }
     }
 }
