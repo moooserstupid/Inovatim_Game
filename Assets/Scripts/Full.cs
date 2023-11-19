@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Full : MonoBehaviour
 {
-    public bool fullOrNot = true;
+    public bool fullOrNot = false;
 
     // Start is called before the first frame update
     void Start()
