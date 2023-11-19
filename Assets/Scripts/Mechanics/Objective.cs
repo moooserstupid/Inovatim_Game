@@ -7,11 +7,11 @@ namespace Mechanic
 {
     public class Objective : MonoBehaviour
     {
-        [SerializeField] private TextMeshPro textMesh;
+        //[SerializeField] private TextMeshPro textMesh;
 
         private void Start()
         {
-            textMesh.text = gameObject.name;
+            //textMesh.text = gameObject.name;
         }
     }
 }

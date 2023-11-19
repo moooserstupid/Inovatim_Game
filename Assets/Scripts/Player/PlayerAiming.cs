@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using UnityEngine.Windows;
 namespace Player
 {
@@ -25,6 +26,10 @@ namespace Player
         [SerializeField] private GameObject throwerSurface;
         [SerializeField] private Transform maxThrowRotation;
         [SerializeField] private TargetShow targetArrow;
+
+        [Header("Misc")]
+        [SerializeField] private List<Sprite> objectiveImages;
+
         private CharacterInput m_input;
         private Vector2 m_currentAimInput;
         private Coroutine powerUpCoroutine;
@@ -128,9 +133,29 @@ namespace Player
             m_hasPackage = true;
             dummyPackage.SetActive(true);
             //dummyPackage.GetComponentInChildren<TimerScript>().SetTime(m_boxTimerReference.second, m_boxTimerReference.minute);
+            
             Vector3 centerLocalPositionRelativeToPackage = dummyPackage.transform.InverseTransformPoint(colliderCenter);
             Debug.Log(centerLocalPositionRelativeToPackage);
             m_currentPackageAddressRef = addresList[UnityEngine.Random.Range(0, addresList.Length)];
+
+            switch (m_currentPackageAddressRef)
+            {
+                case "A":
+                    dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[0];
+                    break;
+                case "B":
+                    dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[1];
+
+                    break;
+                case "C":
+                    dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[2];
+
+                    break;
+                case "D":
+                    dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[3];
+                    break;
+
+            }
             targetArrow.SetTarget(GameObject.Find(m_currentPackageAddressRef).transform);
             m_packageStateReference = 0;
             StartCoroutine(StartLoadingPackage(0.2f, centerLocalPositionRelativeToPackage));
@@ -162,7 +187,25 @@ namespace Player
                 other.GetComponent<Package>().ReuseAfterFall();
                 m_currentPackageAddressRef = other.GetComponent<Package>().GetAddress();
                 m_packageStateReference = other.GetComponent<Package>().GetPackageState();
-               // m_boxTimerReference = other.GetComponentInChildren<TimerScript>().GetTime();
+                switch (m_currentPackageAddressRef)
+                {
+                    case "A":
+                        dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[0];
+                        break;
+                    case "B":
+                        dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[1];
+
+                        break;
+                    case "C":
+                        dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[2];
+
+                        break;
+                    case "D":
+                        dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[3];
+                        break;
+
+                }
+                // m_boxTimerReference = other.GetComponentInChildren<TimerScript>().GetTime();
                 //dummyPackage.GetComponentInChildren<TimerScript>().SetTime(m_boxTimerReference.second, m_boxTimerReference.minute);
                 targetArrow.SetTarget(GameObject.Find(m_currentPackageAddressRef).transform);
                 m_hasPackage = true;
@@ -181,7 +224,7 @@ namespace Player
             while (timer < duration)
             {
                 timer += Time.deltaTime;
-                Debug.Log(dummyPackage.transform.localPosition);
+                //Debug.Log(dummyPackage.transform.localPosition);
                 dummyPackage.transform.localPosition = Vector3.Lerp(dummyPackage.transform.localPosition, finalPos, timer / duration);
                 yield return null;
             }

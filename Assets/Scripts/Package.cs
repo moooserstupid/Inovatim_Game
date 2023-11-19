@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Xml.Serialization;
 using UI;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 
 public class Package : MonoBehaviour
@@ -12,6 +12,9 @@ public class Package : MonoBehaviour
     [SerializeField] private GameObject[] packageList;
     public string Addres;
     private string[] addresList = { "A", "B", "C", "D" };
+
+    [Header("Misc")]
+    [SerializeField] private List<Sprite> objectiveImages;
 
     private int packageStateIndex;
     private bool fallen = true;
@@ -25,6 +28,24 @@ public class Package : MonoBehaviour
     public void SetAddress(string address)
     {
         Addres = address;
+        switch (Addres)
+        {
+            case "A":
+                GetComponentInChildren<Image>().sprite = objectiveImages[0];
+                break;
+            case "B":
+                GetComponentInChildren<Image>().sprite = objectiveImages[1];
+
+                break;
+            case "C":
+                GetComponentInChildren<Image>().sprite = objectiveImages[2];
+
+                break;
+            case "D":
+                GetComponentInChildren<Image>().sprite = objectiveImages[3];
+                break;
+
+        }
     }
     public void SetPackageState(int packageStateIndex)
     {
@@ -43,24 +64,24 @@ public class Package : MonoBehaviour
         Debug.Log("trigger");
         if (other.name == Addres)
         {
-            if (damaged)
+            if (packageStateIndex > 0)
             {
-                GameObject go = GameObject.Find("Currency");
-                go.GetComponent<Currnecy>().EarnMoney(true);
+                //GameObject go = GameObject.Find("Currency");
+                Currnecy.Instance.EarnMoney(true, other.gameObject.transform.position + new Vector3(0, 0, 5));
 
             }
             else
             {
-                GameObject go = GameObject.Find("Currency");
-                go.GetComponent<Currnecy>().EarnMoney(false);
+                //GameObject go = GameObject.Find("Currency");
+                Currnecy.Instance.EarnMoney(false, other.gameObject.transform.position + new Vector3(0, 0, -5));
             }
 
             Object.Destroy(this.gameObject);
         }
         else if (other.tag == "Address")
         {
-            GameObject go = GameObject.Find("Currency");
-            go.GetComponent<Currnecy>().LoseMoney("wrongaddress");
+            //GameObject go = GameObject.Find("Currency");
+            Currnecy.Instance.LoseMoney("wrongaddress", other.gameObject.transform.position);
             Object.Destroy(this.gameObject);
         }
 
@@ -89,8 +110,7 @@ public class Package : MonoBehaviour
             rb.useGravity = false;
             rb.Sleep();
             collider.isTrigger = true;
-            fallen = true;
-            FloatingTextManager.Instance.ShowText("-50", transform.position, UnityEngine.Color.red);
+            FloatingTextManager.Instance.ShowText("CAREFUL!", transform.position, UnityEngine.Color.red);
 
             
             
