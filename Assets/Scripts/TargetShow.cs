@@ -10,9 +10,8 @@ public class TargetShow : MonoBehaviour
     void Start()
     {
         targetNo = 0;
+        //gameObject.SetActive(false);
     }
-
-    // Update is called once per frame
     void Update()
     {
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target[targetNo].position - transform.position),
@@ -29,4 +28,35 @@ public class TargetShow : MonoBehaviour
             //transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(target.position-transform.position),
             //rotationSpeed*Time.deltaTime);
     }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("TargetA"))
+    //    {
+    //        gameObject.SetActive(true);
+    //        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target[0].position - transform.position),
+    //        rotationSpeed*Time.deltaTime);
+    //    }
+    //    else if (collision.gameObject.CompareTag("TargetB"))
+    //    {
+    //        gameObject.SetActive(true);
+    //        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target[1].position - transform.position),
+    //        rotationSpeed * Time.deltaTime);
+    //    }
+    //    else if (collision.gameObject.CompareTag("TargetC"))
+    //    {
+    //        gameObject.SetActive(true);
+    //        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target[2].position - transform.position),
+    //        rotationSpeed * Time.deltaTime);
+    //    }
+    //    else if (collision.gameObject.CompareTag("TargetD"))
+    //    {
+    //        gameObject.SetActive(true);
+    //        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target[3].position - transform.position),
+    //        rotationSpeed * Time.deltaTime);
+    //    }
+    //    else
+    //    {
+    //        gameObject.SetActive(false);
+    //    }
+    //}
 }
