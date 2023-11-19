@@ -130,10 +130,17 @@ namespace Player
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, xAxis.Value, transform.eulerAngles.z);
         }
 
-        private void LoadPackage(Vector3 colliderCenter)
+        private void LoadPackage(Vector3 colliderCenter, GameObject box)
         {
             m_hasPackage = true;
+            //dummyPackage = box.gameObject;
+            //Object.Destroy(box.gameObject);
             dummyPackage.SetActive(true);
+
+            dummyPackage = box.transform.GetChild(box.transform.childCount).gameObject;
+            box.transform.GetChild(box.transform.childCount).gameObject.SetActive(false);
+            //Object.Destroy(box.transform.GetChild(0).gameObject);
+
             Vector3 centerLocalPositionRelativeToPackage = dummyPackage.transform.InverseTransformPoint(colliderCenter);
             Debug.Log(centerLocalPositionRelativeToPackage);
             StartCoroutine(StartLoadingPackage(0.2f, centerLocalPositionRelativeToPackage));
@@ -150,12 +157,17 @@ namespace Player
         }
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Spawner") && !m_hasPackage)
+            if (other.CompareTag("Spawner") && !m_hasPackage && other.GetComponent<SpawnLocation>().fullOrNot)
             {
-
                 other.gameObject.GetComponent<SpawnLocation>().TakePackage();
-                LoadPackage(other.bounds.center);
+                LoadPackage(other.bounds.center, other.gameObject);
+                other.GetComponent<SpawnLocation>().fullOrNot = false;
             }
+            //if ((other.name == "A(Clone)" | other.name == "B(Clone)" | other.name == "C(Clone)") && !m_hasPackage)
+            //{
+            //    LoadPackage(other.bounds.center, other.gameObject);
+            //    other.GetComponent<SpawnLocation>().fullOrNot = false;
+            //}
         }
         IEnumerator StartLoadingPackage(float duration, Vector3 loadOrigin)
         {
