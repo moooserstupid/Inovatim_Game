@@ -6,7 +6,7 @@ public class Spawner : MonoBehaviour
 {
 
 
-    public GameObject Box;
+    public GameObject[] Boxes;
     private GameObject randomSpawnSpot;
     public GameObject[] boxPositonList;
     public int gerisayimCount = 0;
@@ -27,7 +27,8 @@ public class Spawner : MonoBehaviour
             if (randomSpawnSpot.GetComponent<SpawnLocation>().fullOrNot == false)
             {
                 V = new Vector3(randomSpawnSpot.transform.position.x, randomSpawnSpot.transform.position.y, randomSpawnSpot.transform.position.z);
-                Instantiate(Box,V,Q);
+                GameObject spawned =  Instantiate(Boxes[Random.Range(0,Boxes.Length)],V,Q);
+                spawned.transform.SetParent(randomSpawnSpot.transform);
                 randomSpawnSpot.GetComponent<SpawnLocation>().fullOrNot = true;
                 yield return new WaitForSeconds(5 - gerisayimCount);
             }

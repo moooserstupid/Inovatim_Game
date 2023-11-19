@@ -12,6 +12,8 @@ namespace Player
 
     public class PlayerAiming : MonoBehaviour
     {
+        private AudioSource throwSound;
+
         [Header("Throwing Parameters")]
         [SerializeField] private float maxPowerUpDuration = 0.5f;
         [SerializeField] private float initialThrowForce = 5f;
@@ -58,6 +60,8 @@ namespace Player
             m_hasPackage = false;
             dummyPackageRestPosition = dummyPackage.transform.position;
             dummyPackage.SetActive(false);
+
+            throwSound = GetComponent<AudioSource>();
         }
 
         private void OnFireInput(InputAction.CallbackContext context)
@@ -91,6 +95,8 @@ namespace Player
 
         private void Throw(float forceMagnitude)
         {
+            throwSound.Play();
+
             Quaternion throwRotation = Quaternion.FromToRotation(Vector3.up, transform.forward);
             objectToThrow.transform.rotation = throwRotation * attackPoint.transform.rotation;
 
@@ -137,10 +143,17 @@ namespace Player
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, xAxis.Value, transform.eulerAngles.z);
         }
 
-        private void LoadPackage(Vector3 colliderCenter)
+        private void LoadPackage(Vector3 colliderCenter, GameObject box)
         {
             m_hasPackage = true;
+            //dummyPackage = box.gameObject;
+            //Object.Destroy(box.gameObject);
             dummyPackage.SetActive(true);
+
+            dummyPackage = box.transform.GetChild(box.transform.childCount).gameObject;
+            box.transform.GetChild(box.transform.childCount).gameObject.SetActive(false);
+            //Object.Destroy(box.transform.GetChild(0).gameObject);
+
             Vector3 centerLocalPositionRelativeToPackage = dummyPackage.transform.InverseTransformPoint(colliderCenter);
             m_currentPackageAddressRef = addresList[UnityEngine.Random.Range(0, addresList.Length)];
 
@@ -158,11 +171,11 @@ namespace Player
         }
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Spawner") && !m_hasPackage)
+            if (other.CompareTag("Spawner") && !m_hasPackage && other.GetComponent<SpawnLocation>().fullOrNot)
             {
-
                 other.gameObject.GetComponent<SpawnLocation>().TakePackage();
-                LoadPackage(other.bounds.center);
+                LoadPackage(other.bounds.center, other.gameObject);
+                other.GetComponent<SpawnLocation>().fullOrNot = false;
             }
             if (other.CompareTag("Package") && !m_hasPackage)
             {
