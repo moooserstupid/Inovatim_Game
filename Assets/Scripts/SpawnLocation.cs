@@ -26,6 +26,7 @@ public class SpawnLocation : MonoBehaviour
 
     public void TakePackage()
     {
+        if (fullOrNot == false) return;
         fullOrNot = false;
         GetComponentInChildren<FakePackage>().ReuseAfterFall();
 

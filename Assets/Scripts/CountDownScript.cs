@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class TimerScript1 : MonoBehaviour
+public class CountDownScript : MonoBehaviour
 {
     public bool playcountdown;
     public int seconds;
@@ -12,12 +13,6 @@ public class TimerScript1 : MonoBehaviour
     void Start()
     {
         StartCoroutine(countdown() );
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     IEnumerator countdown()
@@ -39,7 +34,7 @@ public class TimerScript1 : MonoBehaviour
             if (minutes == 0 & seconds == 0)
             {
                 playcountdown = false;
-                Destroy(gameObject); 
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
     }

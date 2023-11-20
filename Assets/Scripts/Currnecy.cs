@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Currnecy : MonoBehaviour
 {
@@ -20,7 +21,8 @@ public class Currnecy : MonoBehaviour
     public int not_alive = 5;
     public int speedUp = 50;
 
-    public int goal = 50;
+    public int goal=50; 
+    public TextMeshProUGUI targetAmount;
 
     private void Awake()
     {
@@ -35,6 +37,7 @@ public class Currnecy : MonoBehaviour
 
     private void Start()
     {
+        targetAmount.text = goal.ToString();
         _audioSource = GetComponent<AudioSource>();
     }
 
@@ -63,12 +66,18 @@ public class Currnecy : MonoBehaviour
 
     public void GameWon()
     {
-        Debug.Log("Won");
+        Debug.Log("Won"); 
+        if(SceneManager.GetActiveScene().buildIndex==4) //4 Build'teki son rakam
+        {
+            SceneManager.LoadScene(1); //CreditsScene
+        }
+        else SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 
     public void GameLost()
     {
         Debug.Log("Lost");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void LoseMoney(string durum, Vector3 worldPosition)
