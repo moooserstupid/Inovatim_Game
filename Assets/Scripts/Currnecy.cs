@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UI;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class Currnecy : MonoBehaviour
     [SerializeField] private AudioClip moneyEarn;
     [SerializeField] private AudioClip fail;
     [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private TextMeshProUGUI textMesh;
 
     public int money = 0;
     
@@ -54,6 +56,7 @@ public class Currnecy : MonoBehaviour
         {
             GameWon();
         }
+        textMesh.text = money.ToString();
         Debug.Log(money);
         _audioSource.PlayOneShot(moneyEarn, 0.7F);
     }
@@ -87,6 +90,7 @@ public class Currnecy : MonoBehaviour
         {
             GameLost();
         }
+        textMesh.text = money.ToString();
         Debug.Log(money);
         _audioSource.PlayOneShot(fail, 0.5F) ;
     }
