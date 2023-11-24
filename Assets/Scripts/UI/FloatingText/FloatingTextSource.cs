@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace UI
+namespace UI.FloatingText
 {
     public class FloatingTextSource : MonoBehaviour
     {
@@ -23,7 +23,7 @@ namespace UI
         {
             //Destroy(this, 0.5f);
             //StartCoroutine(FadeText());.
-            
+
         }
 
         public void Activate(string text, Color textColor)
@@ -47,8 +47,8 @@ namespace UI
             {
                 timer += textDuration;
                 textMesh.alpha = Mathf.Lerp(textMesh.color.a, 0f, timer / textDuration);
-                textMesh.transform.position = Vector3.Lerp(textMesh.transform.position, 
-                    textMesh.transform.position + (new Vector3(0,1,0) * 3f), 
+                textMesh.transform.position = Vector3.Lerp(textMesh.transform.position,
+                    textMesh.transform.position + new Vector3(0, 1, 0) * 3f,
                     timer / textDuration);
                 yield return null;
             }

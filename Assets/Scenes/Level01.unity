@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -761,7 +761,7 @@ GameObject:
   - component: {fileID: 77121846}
   - component: {fileID: 77121845}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: TargetIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18801,7 +18801,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1345712467}
   - component: {fileID: 1345712469}
-  - component: {fileID: 1345712468}
   m_Layer: 0
   m_Name: A
   m_TagString: Address
@@ -18825,18 +18824,6 @@ Transform:
   - {fileID: 476629561}
   m_Father: {fileID: 1588665266}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 91.027}
---- !u!114 &1345712468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1345712466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39c1aaa1b2db875479bc8bd66dfdc16c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1345712469
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19504,7 +19491,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1371621445}
   - component: {fileID: 1371621447}
-  - component: {fileID: 1371621446}
   m_Layer: 0
   m_Name: B
   m_TagString: Address
@@ -19528,18 +19514,6 @@ Transform:
   - {fileID: 1441557536}
   m_Father: {fileID: 1588665266}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!114 &1371621446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1371621444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39c1aaa1b2db875479bc8bd66dfdc16c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1371621447
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22643,7 +22617,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1610715411}
   - component: {fileID: 1610715413}
-  - component: {fileID: 1610715412}
   m_Layer: 0
   m_Name: C
   m_TagString: Address
@@ -22667,18 +22640,6 @@ Transform:
   - {fileID: 1479866996}
   m_Father: {fileID: 1588665266}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!114 &1610715412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610715410}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39c1aaa1b2db875479bc8bd66dfdc16c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1610715413
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24689,7 +24650,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1747229201}
   - component: {fileID: 1747229203}
-  - component: {fileID: 1747229202}
   m_Layer: 0
   m_Name: D
   m_TagString: Address
@@ -24713,18 +24673,6 @@ Transform:
   - {fileID: 1867768769}
   m_Father: {fileID: 1588665266}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!114 &1747229202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1747229200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39c1aaa1b2db875479bc8bd66dfdc16c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1747229203
 BoxCollider:
   m_ObjectHideFlags: 0

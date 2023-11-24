@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UI
+namespace UI.FloatingText
 {
     public class FloatingTextManager : MonoBehaviour
     {
@@ -15,12 +15,13 @@ namespace UI
             if (Instance == null)
             {
                 Instance = this;
-            } else
+            }
+            else
             {
                 Destroy(Instance);
             }
 
-           
+
         }
         private void Start()
         {
@@ -40,15 +41,15 @@ namespace UI
             Debug.Log(text);
             if (usageQueue.Count > 0)
             {
-                
+
                 int textIndex = usageQueue.Dequeue();
                 floatingTextSources[textIndex].Activate(text, textColor);
                 floatingTextSources[textIndex].transform.position = worldPosition + new Vector3(0, 5f, 0);
                 floatingTextSources[textIndex].transform.LookAt(Camera.main.transform.position);
-                
+
                 StartCoroutine(DeactivateTextRoutine(textIndex));
             }
-            
+
 
         }
 

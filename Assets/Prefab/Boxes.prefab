@@ -114,7 +114,6 @@ GameObject:
   - component: {fileID: 7209224869244196299}
   - component: {fileID: 3571114647003204770}
   - component: {fileID: 6099769410204021927}
-  - component: {fileID: 2587430084052638256}
   - component: {fileID: 3214571284690931675}
   m_Layer: 0
   m_Name: Boxes
@@ -131,7 +130,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2532118999159818715}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.45548186, y: 0.54086626, z: -0.54086626, w: 0.45548183}
+  m_LocalRotation: {x: 0.5616905, y: 0.42953905, z: -0.4295391, w: 0.5616905}
   m_LocalPosition: {x: 0.89, y: 3.914, z: -2.417}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -191,23 +190,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.63421774, y: 0.63912106, z: 0.64736617}
   m_Center: {x: 0.00396049, y: 0.2929299, z: 0.020605624}
---- !u!114 &2587430084052638256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2532118999159818715}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9d47005202cac54b9fcfc965e90b111, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Boxes:
-  - {fileID: 1981158929984870791}
-  - {fileID: 4876322710023234698}
-  - {fileID: 4225584305821884615}
-  - {fileID: 4225584305821884615}
 --- !u!114 &3214571284690931675
 MonoBehaviour:
   m_ObjectHideFlags: 0

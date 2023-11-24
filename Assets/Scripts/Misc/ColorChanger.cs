@@ -1,3 +1,4 @@
+using Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,7 +42,7 @@ public class ColorChanger : MonoBehaviour
                 alive = false;
 
                 //GameObject go = GameObject.Find("Currency");
-                Currnecy.Instance.LoseMoney("not_alive", transform.position);
+                GameStateManager.Instance.LoseMoney("not_alive", transform.position);
 
                 Object.Destroy(this.gameObject);
             }

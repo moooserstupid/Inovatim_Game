@@ -9,7 +9,6 @@ namespace Player
     public class PlayerMovement : MonoBehaviour
     {
         [Header("Movement Parameters")]
-        [SerializeField] private float startMovementSpeed = 3.0f;
         [SerializeField] private float maxMovementSpeed = 5f;
         [SerializeField] private float accelerationRate = 0.5f;
         [SerializeField] private float decelerationRate = 0.5f;
@@ -26,8 +25,6 @@ namespace Player
         private Vector3 m_spherePosition;
         private Vector3 m_sphereVelocity;
 
-        //private float m_rotationFactorPerFrame = 1.0f;
-        private float m_accelerationTime = 0f;
         private float m_currentSpeed = 0f;
         private bool m_isMovementPressed;
 
