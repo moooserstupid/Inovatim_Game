@@ -6,8 +6,11 @@ using UnityEngine.SceneManagement;
 
 namespace Managers
 {
+    
+    
     public class GameStateManager : MonoBehaviour
     {
+        
         public static GameStateManager Instance { get; private set; }
         [SerializeField] private AudioClip moneyEarn;
         [SerializeField] private AudioClip fail;
@@ -25,6 +28,8 @@ namespace Managers
         public int goal = 50;
         public TextMeshProUGUI targetAmount;
 
+
+        private GameState state;
         private void Awake()
         {
             if (Instance == null)
@@ -41,6 +46,8 @@ namespace Managers
         {
             targetAmount.text = goal.ToString();
             _audioSource = GetComponent<AudioSource>();
+
+            state = GameState.PLAYING;
         }
 
         public void EarnMoney(bool damaged, Vector3 worldPosition)
@@ -57,7 +64,7 @@ namespace Managers
                 FloatingTextManager.Instance.ShowText("+$" + succes.ToString(), worldPosition, Color.green);
             }
 
-            if (money >= goal)
+            if (money >= goal && state == GameState.PLAYING)
             {
                 GameWon();
             }
@@ -68,6 +75,7 @@ namespace Managers
 
         public void GameWon()
         {
+            state = GameState.ENDED;
             Debug.Log("Won");
             if (SceneManager.GetActiveScene().buildIndex == 4) //4 Build'teki son rakam
             {
@@ -78,6 +86,7 @@ namespace Managers
 
         public void GameLost()
         {
+            state = GameState.ENDED;
             Debug.Log("Lost");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
@@ -97,7 +106,7 @@ namespace Managers
                 money -= not_alive;
                 FloatingTextManager.Instance.ShowText("-$" + not_alive.ToString(), worldPosition, Color.red);
             }
-            if (money <= 0)
+            if (money <= 0 && state == GameState.PLAYING)
             {
                 GameLost();
             }

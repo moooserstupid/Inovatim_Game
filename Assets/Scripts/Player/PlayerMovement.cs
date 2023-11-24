@@ -20,7 +20,7 @@ namespace Player
         private CharacterController m_characterController;
 
         private Vector2 m_currentMovementInput;
-        private Vector3 m_currentMovement;
+        public Vector3 m_currentMovement;
         private Vector3 m_moveDirection;
         private Vector3 m_spherePosition;
         private Vector3 m_sphereVelocity;
@@ -91,7 +91,13 @@ namespace Player
                 {
                     m_currentSpeed = 0;
                 }
-                m_moveDirection = Vector3.Lerp(m_moveDirection, Vector3.zero, decelerationRate);
+                if (m_moveDirection.magnitude > 0.01f)
+                {
+                    m_moveDirection = Vector3.Lerp(m_moveDirection, Vector3.zero, decelerationRate);
+                } else
+                {
+                    m_moveDirection = Vector3.zero;
+                }
 
             }
             //Debug.Log(m_moveDirection);

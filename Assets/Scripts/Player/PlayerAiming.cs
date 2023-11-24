@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using Mechanics;
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -26,7 +27,7 @@ namespace Player
         [SerializeField] private GameObject dummyPackage;
         [SerializeField] private GameObject throwerSurface;
         [SerializeField] private Transform maxThrowRotation;
-        [SerializeField] private TargetShow targetArrow;
+        [SerializeField] private TargetIndicator targetArrow;
 
         [Header("Misc")]
         [SerializeField] private List<Sprite> objectiveImages;
@@ -95,10 +96,7 @@ namespace Player
                 projectile.GetComponent<Package>().SetAddress(m_currentPackageAddressRef);
                 targetArrow.DeactivateTarget();
             }
-            //if (m_boxTimerReference != null)
-            //{
-            //    projectile.GetComponentInChildren<TimerScript>().SetTime(m_boxTimerReference.second, m_boxTimerReference.minute);
-            //}
+            
             projectile.GetComponent<Package>().SetPackageState(m_packageStateReference);
             RaycastHit hit;
             if (Physics.Raycast(camFollowPos.position, camFollowPos.forward, out hit, 500f))
@@ -114,13 +112,14 @@ namespace Player
         private void OnAimInput(InputAction.CallbackContext context)
         {
             m_currentAimInput = context.ReadValue<Vector2>();
-            xAxis.m_InputAxisValue = m_currentAimInput.x;
-            yAxis.m_InputAxisValue = m_currentAimInput.y;
+            //xAxis.m_InputAxisValue = m_currentAimInput.x;
+            //yAxis.m_InputAxisValue = m_currentAimInput.y;
         }
 
         private void Update()
         {
             Debug.DrawRay(camFollowPos.position, camFollowPos.forward * 500.0f, Color.red);
+            xAxis.m_InputAxisValue = GetComponent<PlayerMovement>().m_currentMovement.x;
             xAxis.Update(Time.deltaTime);
             yAxis.Update(Time.deltaTime);
         }
@@ -206,8 +205,7 @@ namespace Player
                         break;
 
                 }
-                // m_boxTimerReference = other.GetComponentInChildren<TimerScript>().GetTime();
-                //dummyPackage.GetComponentInChildren<TimerScript>().SetTime(m_boxTimerReference.second, m_boxTimerReference.minute);
+                
                 targetArrow.SetTarget(GameObject.Find(m_currentPackageAddressRef).transform);
                 m_hasPackage = true;
                 dummyPackage.SetActive(true);
@@ -244,13 +242,7 @@ namespace Player
             //dummyPackage.transform.rotation = start;
 
         }
-        //private void OnCollisionEnter(Collision collision)
-        //{
-        //    if (collision.gameObject.CompareTag("FakePackage"))
-        //    {
-        //        collision.gameObject.GetComponent<FakePackage>().ReuseAfterFall();
-        //    }
-        //}
+        
         IEnumerator RotateThrower()
         {
             float currentRotationTimer = 0f;
