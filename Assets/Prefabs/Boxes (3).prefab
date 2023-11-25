@@ -63,7 +63,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Box
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7767188223793863556, guid: 419d6312fe1ac844db4cc11f5c2973b7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4376671375575792444, guid: 419d6312fe1ac844db4cc11f5c2973b7, type: 3}
+    - {fileID: 5626459284492049581, guid: 419d6312fe1ac844db4cc11f5c2973b7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -211,7 +218,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Box (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7767188223793863556, guid: 419d6312fe1ac844db4cc11f5c2973b7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4376671375575792444, guid: 419d6312fe1ac844db4cc11f5c2973b7, type: 3}
+    - {fileID: 5626459284492049581, guid: 419d6312fe1ac844db4cc11f5c2973b7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -358,7 +372,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2fc2e44173943c4e9f20141471835f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  packageList: []
   Addres: 
+  objectiveImages: []
   damaged: 0
 --- !u!4 &4376619320194158169 stripped
 Transform:
@@ -429,7 +445,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Box 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7767188223793863556, guid: 7a0c4e3bd325beb4ba319dc737e1812f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6614888602772505667, guid: 7a0c4e3bd325beb4ba319dc737e1812f, type: 3}
+    - {fileID: -8480808029897808450, guid: 7a0c4e3bd325beb4ba319dc737e1812f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -503,7 +526,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Box (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7767188223793863556, guid: 419d6312fe1ac844db4cc11f5c2973b7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4376671375575792444, guid: 419d6312fe1ac844db4cc11f5c2973b7, type: 3}
+    - {fileID: 5626459284492049581, guid: 419d6312fe1ac844db4cc11f5c2973b7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
