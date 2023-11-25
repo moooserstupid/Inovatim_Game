@@ -9,7 +9,6 @@ namespace Player
     public class PlayerMovement : MonoBehaviour
     {
         [Header("Movement Parameters")]
-        [SerializeField] private float startMovementSpeed = 3.0f;
         [SerializeField] private float maxMovementSpeed = 5f;
         [SerializeField] private float accelerationRate = 0.5f;
         [SerializeField] private float decelerationRate = 0.5f;
@@ -21,13 +20,11 @@ namespace Player
         private CharacterController m_characterController;
 
         private Vector2 m_currentMovementInput;
-        private Vector3 m_currentMovement;
+        public Vector3 m_currentMovement;
         private Vector3 m_moveDirection;
         private Vector3 m_spherePosition;
         private Vector3 m_sphereVelocity;
 
-        //private float m_rotationFactorPerFrame = 1.0f;
-        private float m_accelerationTime = 0f;
         private float m_currentSpeed = 0f;
         private bool m_isMovementPressed;
 
@@ -94,7 +91,13 @@ namespace Player
                 {
                     m_currentSpeed = 0;
                 }
-                m_moveDirection = Vector3.Lerp(m_moveDirection, Vector3.zero, decelerationRate);
+                if (m_moveDirection.magnitude > 0.01f)
+                {
+                    m_moveDirection = Vector3.Lerp(m_moveDirection, Vector3.zero, decelerationRate);
+                } else
+                {
+                    m_moveDirection = Vector3.zero;
+                }
 
             }
             //Debug.Log(m_moveDirection);
