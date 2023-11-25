@@ -1,6 +1,8 @@
 
+using System.Collections;
 using TMPro;
 using UI.FloatingText;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,6 +19,8 @@ namespace Managers
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private TextMeshProUGUI textMesh;
 
+        public GameObject wonScreen;
+        public GameObject lostScreen;
         public int money = 0;
 
         public int succes = 10;
@@ -96,18 +100,17 @@ namespace Managers
         {
             state = GameState.ENDED;
             Debug.Log("Won");
-            if (SceneManager.GetActiveScene().buildIndex == 4) //4 Build'teki son rakam
-            {
-                SceneManager.LoadScene(1); //CreditsScene
-            }
-            else SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            wonScreen.SetActive(true);
+            StartCoroutine(GameEndDelay(true));
+
         }
 
         public void GameLost()
         {
             state = GameState.ENDED;
             Debug.Log("Lost");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            lostScreen.SetActive(true);
+            StartCoroutine(GameEndDelay(false));
         }
 
         public void LoseMoney(string durum, Vector3 worldPosition)
@@ -132,6 +135,22 @@ namespace Managers
             textMesh.text = money.ToString();
             Debug.Log(money);
             //_audioSource.PlayOneShot(fail, 0.5F);
+        }
+        IEnumerator GameEndDelay(bool won) 
+        {
+            yield return new WaitForSeconds(2);
+
+            if (won)
+            {
+                if (SceneManager.GetActiveScene().buildIndex == 4) //4 Build'teki son rakam
+                {
+                    SceneManager.LoadScene(1); //CreditsScene
+                }
+                else SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            } else
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
         }
     }
 }
