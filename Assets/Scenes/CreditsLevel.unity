@@ -473,8 +473,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 933298455}
-        m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
+      - m_Target: {fileID: 933298458}
+        m_TargetAssemblyTypeName: UI.MenuScript, Assembly-CSharp
         m_MethodName: Return
         m_Mode: 1
         m_Arguments:
@@ -1730,8 +1730,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 933298456}
-  - component: {fileID: 933298455}
   - component: {fileID: 933298457}
+  - component: {fileID: 933298458}
   m_Layer: 0
   m_Name: GameScripts
   m_TagString: Untagged
@@ -1739,22 +1739,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &933298455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 933298454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8955e30b3110e3b46bf917ebade348bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firstMenu: {fileID: 570512340}
-  secondMenu: {fileID: 211211693}
-  pos1: {fileID: 327350269}
-  pos2: {fileID: 1739338783}
 --- !u!4 &933298456
 Transform:
   m_ObjectHideFlags: 0
@@ -1784,6 +1768,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowCurrentTime: 1
   timer: {fileID: 567506378}
+--- !u!114 &933298458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933298454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8955e30b3110e3b46bf917ebade348bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstMenu: {fileID: 570512340}
+  secondMenu: {fileID: 211211693}
+  pos1: {fileID: 337754131}
+  pos2: {fileID: 337754131}
 --- !u!1001 &946921005
 PrefabInstance:
   m_ObjectHideFlags: 0

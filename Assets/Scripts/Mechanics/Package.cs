@@ -17,10 +17,17 @@ namespace Mechanics
 
         private int packageStateIndex;
         public bool damaged = false;
+        public bool collected;
+        private void Awake()
+        {
+            collected = false;
+        }
         // Start is called before the first frame update
         void Start()
         {
             //Addres = addresList[Random.Range(0, addresList.Length)];
+            
+            //GetComponent<Rigidbody>().freezeRotation = true;
         }
 
         public void SetAddress(string address)
@@ -49,6 +56,15 @@ namespace Mechanics
         {
             this.packageStateIndex = packageStateIndex;
         }
+        public void PackageCollected()
+        {
+            Debug.Log("Collected");
+            collected = true;
+        }
+        public bool HasPackageBeenCollected()
+        {
+            return collected;
+        }
         public int GetPackageState()
         {
             return packageStateIndex;
@@ -59,29 +75,42 @@ namespace Mechanics
         }
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("trigger");
-            if (other.name == Addres)
+            if (collected)
             {
-                if (packageStateIndex > 0)
+                if (other.name == Addres)
+                {
+                    if (packageStateIndex > 0)
+                    {
+                        //GameObject go = GameObject.Find("Currency");
+                        GameStateManager.Instance.EarnMoney(true, other.gameObject.transform.position + new Vector3(0, 0, 5), Addres);
+
+                    }
+                    else
+                    {
+                        //GameObject go = GameObject.Find("Currency");
+                        GameStateManager.Instance.EarnMoney(false, other.gameObject.transform.position + new Vector3(0, 0, -5), Addres);
+                    }
+
+                    Destroy(gameObject);
+                }
+                else if (other.tag == "Address")
                 {
                     //GameObject go = GameObject.Find("Currency");
-                    GameStateManager.Instance.EarnMoney(true, other.gameObject.transform.position + new Vector3(0, 0, 5));
-
+                    //GameStateManager.Instance.LoseMoney("wrongaddress", other.gameObject.transform.position);
+                    //Destroy(gameObject);
                 }
-                else
-                {
-                    //GameObject go = GameObject.Find("Currency");
-                    GameStateManager.Instance.EarnMoney(false, other.gameObject.transform.position + new Vector3(0, 0, -5));
-                }
-
-                Destroy(gameObject);
-            }
-            else if (other.tag == "Address")
+            } else if (other.CompareTag("Package"))
             {
-                //GameObject go = GameObject.Find("Currency");
-                GameStateManager.Instance.LoseMoney("wrongaddress", other.gameObject.transform.position);
-                Destroy(gameObject);
+                Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+                BoxCollider collider = gameObject.GetComponent<BoxCollider>();
+                rb.velocity = Vector3.zero;
+                //rb.angularVelocity = Vector3.zero;
+                rb.freezeRotation = true;
+                rb.useGravity = false;
+                rb.Sleep();
+                collider.isTrigger = true;
             }
+            
 
 
 
@@ -99,35 +128,50 @@ namespace Mechanics
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.CompareTag("Ground"))
+            if (collected)
+            {
+                if (collision.gameObject.CompareTag("Ground"))
+                {
+                    Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+                    BoxCollider collider = gameObject.GetComponent<BoxCollider>();
+                    rb.velocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                    rb.useGravity = false;
+                    rb.Sleep();
+                    collider.isTrigger = true;
+                    FloatingTextManager.Instance.ShowText("CAREFUL!", transform.position, Color.red);
+
+
+
+                    if (packageStateIndex + 1 >= 3)
+                    {
+                        if (gameObject.activeInHierarchy)
+                        {
+                            gameObject.SetActive(false);
+                            Destroy(gameObject, 2f);
+                        }
+
+                    }
+                    else
+                    {
+                        packageList[packageStateIndex].gameObject.SetActive(false);
+                        packageStateIndex++;
+                        packageList[packageStateIndex].gameObject.SetActive(true);
+                    }
+                }
+            } else
             {
                 Rigidbody rb = gameObject.GetComponent<Rigidbody>();
                 BoxCollider collider = gameObject.GetComponent<BoxCollider>();
                 rb.velocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
+                //rb.angularVelocity = Vector3.zero;
+                rb.freezeRotation = true;
                 rb.useGravity = false;
                 rb.Sleep();
                 collider.isTrigger = true;
-                FloatingTextManager.Instance.ShowText("CAREFUL!", transform.position, Color.red);
-
-
-
-                if (packageStateIndex + 1 >= 3)
-                {
-                    if (gameObject.activeInHierarchy)
-                    {
-                        gameObject.SetActive(false);
-                        Destroy(gameObject, 2f);
-                    }
-
-                }
-                else
-                {
-                    packageList[packageStateIndex].gameObject.SetActive(false);
-                    packageStateIndex++;
-                    packageList[packageStateIndex].gameObject.SetActive(true);
-                }
             }
+
+
         }
     }
 }

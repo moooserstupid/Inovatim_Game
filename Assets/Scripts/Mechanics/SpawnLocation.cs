@@ -29,7 +29,7 @@ namespace Mechanics
         {
             if (fullOrNot == false) return;
             fullOrNot = false;
-            GetComponentInChildren<FakePackage>().ReuseAfterFall();
+            //GetComponentInChildren<FakePackage>().ReuseAfterFall();
 
         }
 

@@ -22,6 +22,9 @@ namespace Managers
         public int succes = 10;
         public int damagedSucces = 5;
 
+        public int[] successRewardList;
+        public int[] successButDamagedRewardList;
+
         public int not_alive = 5;
         public int speedUp = 50;
 
@@ -50,18 +53,34 @@ namespace Managers
             state = GameState.PLAYING;
         }
 
-        public void EarnMoney(bool damaged, Vector3 worldPosition)
-
+        public void EarnMoney(bool damaged, Vector3 worldPosition, string address)
         {
+            int reward = 0, damagedReward = 0;
+            switch (address)
+            {
+                case "A":
+                    reward = successRewardList[0];
+                    damagedReward = successButDamagedRewardList[0];
+                    break;
+                case "B":
+                    reward = successRewardList[1];
+                    damagedReward = successButDamagedRewardList[1];
+                    break;
+                case "C":
+                    reward = successRewardList[2];
+                    damagedReward = successButDamagedRewardList[2];
+                    break;
+
+            }
             if (damaged == true)
             {
-                money += damagedSucces;
-                FloatingTextManager.Instance.ShowText("+$" + damagedSucces.ToString(), worldPosition, Color.green);
+                money += damagedReward;
+                FloatingTextManager.Instance.ShowText("+$" + damagedReward.ToString(), worldPosition + new Vector3(-5, 0, 0), Color.green);
             }
             else
             {
-                money += succes;
-                FloatingTextManager.Instance.ShowText("+$" + succes.ToString(), worldPosition, Color.green);
+                money += reward;
+                FloatingTextManager.Instance.ShowText("+$" + reward.ToString(), worldPosition + new Vector3(-5, 0, 0), Color.green);
             }
 
             if (money >= goal && state == GameState.PLAYING)
@@ -101,18 +120,18 @@ namespace Managers
             //{
             //    money -= speedUp;
             //}
-            if (durum == "wrongaddress")
-            {
-                money -= not_alive;
-                FloatingTextManager.Instance.ShowText("-$" + not_alive.ToString(), worldPosition, Color.red);
-            }
-            if (money <= 0 && state == GameState.PLAYING)
+            //if (durum == "wrongaddress")
+            //{
+            //    money -= not_alive;
+            //    FloatingTextManager.Instance.ShowText("-$" + not_alive.ToString(), worldPosition, Color.red);
+            //}
+            if (money < 0 && state == GameState.PLAYING)
             {
                 GameLost();
             }
             textMesh.text = money.ToString();
             Debug.Log(money);
-            _audioSource.PlayOneShot(fail, 0.5F);
+            //_audioSource.PlayOneShot(fail, 0.5F);
         }
     }
 }
