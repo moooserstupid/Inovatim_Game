@@ -1751,6 +1751,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8955e30b3110e3b46bf917ebade348bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstMenu: {fileID: 570512340}
+  secondMenu: {fileID: 211211693}
+  pos1: {fileID: 327350269}
+  pos2: {fileID: 1739338783}
 --- !u!4 &933298456
 Transform:
   m_ObjectHideFlags: 0
