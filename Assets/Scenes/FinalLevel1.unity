@@ -16141,8 +16141,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playcountdown: 1
-  seconds: 30
-  minutes: 1
+  seconds: 0
+  minutes: 2
   timer: {fileID: 5039855564147135920}
 --- !u!1 &1147868113
 GameObject:
