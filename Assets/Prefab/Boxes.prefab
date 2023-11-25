@@ -130,7 +130,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2532118999159818715}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5419757, y: 0.4541612, z: -0.4541612, w: 0.54197574}
+  m_LocalRotation: {x: 0.42458117, y: 0.5654475, z: -0.5654475, w: 0.42458117}
   m_LocalPosition: {x: 0.89, y: 3.914, z: -2.417}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -208,10 +208,9 @@ MonoBehaviour:
   - {fileID: 4225584305821884615}
   Addres: 
   objectiveImages:
-  - {fileID: 21300000, guid: 3bf9d03ac2cf1ca47b1ca0d650f30088, type: 3}
-  - {fileID: 21300000, guid: b8bad13f72f61ac4f987237947ef790c, type: 3}
-  - {fileID: 21300000, guid: 3f10d3c4eb6232d4e976bf1010b9e296, type: 3}
-  - {fileID: 21300000, guid: 5389902177111bc4ea5c7ebd0c8b2267, type: 3}
+  - {fileID: 21300000, guid: a0f840e6eaad66044b8dc480453b93f1, type: 3}
+  - {fileID: 21300000, guid: b51b8da6dabcb404489a449f5efa71bf, type: 3}
+  - {fileID: 21300000, guid: a9569714c0dc3b647a7ba8fcad057dca, type: 3}
   damaged: 0
   collected: 0
 --- !u!1 &6402823997687498188
