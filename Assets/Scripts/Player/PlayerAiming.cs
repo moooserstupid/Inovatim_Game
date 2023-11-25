@@ -98,6 +98,7 @@ namespace Player
             }
             
             projectile.GetComponent<Package>().SetPackageState(m_packageStateReference);
+            projectile.GetComponent<Package>().PackageCollected();
             RaycastHit hit;
             if (Physics.Raycast(camFollowPos.position, camFollowPos.forward, out hit, 500f))
             {
@@ -136,26 +137,27 @@ namespace Player
             
             Vector3 centerLocalPositionRelativeToPackage = dummyPackage.transform.InverseTransformPoint(colliderCenter);
             Debug.Log(centerLocalPositionRelativeToPackage);
-            m_currentPackageAddressRef = addresList[UnityEngine.Random.Range(0, addresList.Length)];
+            //int packageReferenceIndex = 
+            //m_currentPackageAddressRef = addresList[UnityEngine.Random.Range(0, addresList.Length)];
 
-            switch (m_currentPackageAddressRef)
-            {
-                case "A":
-                    dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[0];
-                    break;
-                case "B":
-                    dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[1];
+            //switch (m_currentPackageAddressRef)
+            //{
+            //    case "A":
+            //        dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[0];
+            //        break;
+            //    case "B":
+            //        dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[1];
 
-                    break;
-                case "C":
-                    dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[2];
+            //        break;
+            //    case "C":
+            //        dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[2];
 
-                    break;
-                case "D":
-                    dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[3];
-                    break;
+            //        break;
+            //    case "D":
+            //        dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[3];
+            //        break;
 
-            }
+            //}
             targetArrow.SetTarget(GameObject.Find(m_currentPackageAddressRef).transform);
             m_packageStateReference = 0;
             StartCoroutine(StartLoadingPackage(0.2f, centerLocalPositionRelativeToPackage));
@@ -168,25 +170,26 @@ namespace Player
         {
             m_input.PlayerControls.Disable();
         }
-        private void OnTriggerEnter(Collider other)
+
+        private void OnCollisionEnter(Collision collision)
         {
-            if (other.CompareTag("Spawner") && !m_hasPackage)
+            if (collision.gameObject.CompareTag("Package") && !m_hasPackage)
             {
-                other.gameObject.GetComponent<SpawnLocation>().TakePackage();
-                if (m_boxTimerReference == null)
+                //Debug.Log("Coll");
+                Package packageReference = collision.gameObject.GetComponent<Package>();
+                m_currentPackageAddressRef = packageReference.GetAddress();
+                packageReference.ReuseAfterFall();
+
+                if (!packageReference.HasPackageBeenCollected())
                 {
-                    m_boxTimerReference = new BoxTime();
+                    packageReference.PackageCollected();
+                    packageReference.SetPackageState(0);
+                    m_packageStateReference = 0;
                 }
-                m_boxTimerReference.second = 30;
-                m_boxTimerReference.minute = 0;
-                LoadPackage(other.bounds.center);
-                return;
-            }
-            if (other.CompareTag("Package") && !m_hasPackage)
-            {
-                other.GetComponent<Package>().ReuseAfterFall();
-                m_currentPackageAddressRef = other.GetComponent<Package>().GetAddress();
-                m_packageStateReference = other.GetComponent<Package>().GetPackageState();
+                else
+                {
+                    m_packageStateReference = packageReference.GetPackageState();
+                }
                 switch (m_currentPackageAddressRef)
                 {
                     case "A":
@@ -205,10 +208,67 @@ namespace Player
                         break;
 
                 }
-                
                 targetArrow.SetTarget(GameObject.Find(m_currentPackageAddressRef).transform);
                 m_hasPackage = true;
                 dummyPackage.SetActive(true);
+                Vector3 centerLocalPositionRelativeToPackage = dummyPackage.transform.InverseTransformPoint(collision.transform.position);
+                StartCoroutine(StartLoadingPackage(0.2f, centerLocalPositionRelativeToPackage));
+                return;
+            }
+        }
+        private void OnTriggerEnter(Collider other)
+        {
+            //if (other.CompareTag("Spawner") && !m_hasPackage)
+            //{
+            //    other.gameObject.GetComponent<SpawnLocation>().TakePackage();
+            //    if (m_boxTimerReference == null)
+            //    {
+            //        m_boxTimerReference = new BoxTime();
+            //    }
+            //    m_boxTimerReference.second = 30;
+            //    m_boxTimerReference.minute = 0;
+            //    LoadPackage(other.bounds.center);
+            //    return;
+            //}
+            if (other.CompareTag("Package") && !m_hasPackage)
+            {
+                //Debug.Log("Coll");
+                Package packageReference = other.GetComponent<Package>();
+                m_currentPackageAddressRef = packageReference.GetAddress();
+                packageReference.ReuseAfterFall();
+                
+                if (!packageReference.HasPackageBeenCollected())
+                {
+                    packageReference.PackageCollected();
+                    packageReference.SetPackageState(0);
+                    m_packageStateReference = 0;
+                } else
+                {
+                    m_packageStateReference = packageReference.GetPackageState();
+                }
+                switch (m_currentPackageAddressRef)
+                {
+                    case "A":
+                        dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[0];
+                        break;
+                    case "B":
+                        dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[1];
+
+                        break;
+                    case "C":
+                        dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[2];
+
+                        break;
+                    case "D":
+                        dummyPackage.GetComponentInChildren<Image>().sprite = objectiveImages[3];
+                        break;
+
+                }
+                targetArrow.SetTarget(GameObject.Find(m_currentPackageAddressRef).transform);
+                m_hasPackage = true;
+                dummyPackage.SetActive(true);
+                Vector3 centerLocalPositionRelativeToPackage = dummyPackage.transform.InverseTransformPoint(other.bounds.center);
+                StartCoroutine(StartLoadingPackage(0.2f, centerLocalPositionRelativeToPackage));
                 return;
             }
             
