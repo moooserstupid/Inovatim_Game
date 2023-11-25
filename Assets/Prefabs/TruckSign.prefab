@@ -172,7 +172,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 11eabb7a9c7d1b44a9a81d5fc3f639e5, type: 2}
+  - {fileID: 2100000, guid: 50555c32d8e4a9c4e873ac953c648efe, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -280,7 +280,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3f10d3c4eb6232d4e976bf1010b9e296, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b51b8da6dabcb404489a449f5efa71bf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
