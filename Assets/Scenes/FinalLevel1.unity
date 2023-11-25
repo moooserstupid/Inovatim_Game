@@ -16315,8 +16315,8 @@ MonoBehaviour:
   money: 0
   succes: 10
   damagedSucces: 5
-  successRewardList: 050000000f00000032000000
-  successButDamagedRewardList: 01000000050000000f000000
+  successRewardList: 3200000064000000c8000000
+  successButDamagedRewardList: 190000003200000064000000
   not_alive: 5
   speedUp: 50
   goal: 100
