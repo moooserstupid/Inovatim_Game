@@ -142,7 +142,7 @@ namespace Managers
 
             if (won)
             {
-                if (SceneManager.GetActiveScene().buildIndex == 4) //4 Build'teki son rakam
+                if (SceneManager.GetActiveScene().buildIndex == 5) //5 Build'teki son rakam
                 {
                     SceneManager.LoadScene(1); //CreditsScene
                 }
